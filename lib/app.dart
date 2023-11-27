@@ -3,10 +3,13 @@ import 'package:base/screen/main/s_main.dart';
 import 'package:flutter/material.dart';
 import 'package:nav/nav.dart';
 
+import 'common/theme/custom_theme.dart';
 import 'common/theme/custom_theme_app.dart';
 
 class App extends StatefulWidget {
   static final GlobalKey<NavigatorState> navigatorKey = GlobalKey();
+
+  static const defaultTheme = CustomTheme.dark;
   static bool isForeground = true;
 
   const App({super.key});

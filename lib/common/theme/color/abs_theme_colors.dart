@@ -26,7 +26,10 @@ abstract class AbstractThemeColors {
 
   Color get textBadgeText => Colors.white;
 
-  Color get badgeBorder => Colors.transparent;
+  Color get badgeBorder => const Color.fromARGB(255, 144, 202, 249);
+
+  Color get seedColor => Colors.transparent;
+
 
   Color get divider => const Color.fromARGB(255, 228, 228, 228);
 
