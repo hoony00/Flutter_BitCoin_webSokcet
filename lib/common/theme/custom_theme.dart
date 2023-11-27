@@ -35,11 +35,12 @@ MaterialColor primarySwatchColor = Colors.lightBlue;
 ThemeData lightTheme = ThemeData(
     primarySwatch: primarySwatchColor,
     visualDensity: VisualDensity.adaptivePlatformDensity,
-    brightness: Brightness.light,
-    // textTheme: GoogleFonts.singleDayTextTheme(
-    //   ThemeData(brightness: Brightness.light).textTheme,
+    brightness: Brightness.dark,
+    scaffoldBackgroundColor: AppColors.veryDarkGrey,
+    // textTheme: GoogleFonts.nanumMyeongjoTextTheme(
+    //   ThemeData(brightness: Brightness.dark).textTheme,
     // ),
-    colorScheme: const ColorScheme.light(background: Colors.white));
+    colorScheme: const ColorScheme.dark(background: AppColors.veryDarkGrey));
 
 ThemeData darkTheme = ThemeData(
     primarySwatch: primarySwatchColor,

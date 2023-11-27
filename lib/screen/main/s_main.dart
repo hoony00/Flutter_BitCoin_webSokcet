@@ -1,11 +1,15 @@
 import 'dart:convert';
+import 'dart:math';
 
 import 'package:base/common/common.dart';
 import 'package:base/common/dart/extension/num_duration_extension.dart';
 import 'package:base/common/widget/AnimatedNumberText.dart';
 import 'package:flutter/material.dart';
-import 'package:get/get_state_manager/get_state_manager.dart';
+import 'package:live_background/live_background.dart';
+import 'package:live_background/object/particle_shape_type.dart';
+import 'package:live_background/widget/live_background_widget.dart';
 import 'package:web_socket_channel/io.dart';
+import '../../common/widget/LineChartWidget.dart';
 import 'w_menu_drawer.dart';
 
 class MainScreen extends StatefulWidget {
@@ -24,6 +28,7 @@ class MainScreenState extends State<MainScreen> {
   String priceString = 'Loading...';
   final List<double> priceList = [];
 
+  double maxPrice = 0;
   final intervalDuration = 1.seconds;
   DateTime lastUpdatedTime = DateTime.now();
 
@@ -36,12 +41,12 @@ class MainScreenState extends State<MainScreen> {
       if(DateTime.now().difference(lastUpdatedTime) > intervalDuration) {
         lastUpdatedTime = DateTime.now();
         setState(() {
+          maxPrice = max(price, maxPrice);
           priceList.add(price);
           // toDoubleStringAsFixed()=> 소수점 두자리수로 끊어줌
           priceString = price.toDoubleStringAsFixed();
         });
       }
-
     });
     super.initState();
   }
@@ -50,19 +55,41 @@ class MainScreenState extends State<MainScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       drawer: const MenuDrawer(),
-      body: Container(
-        child: SafeArea(
-          child: Center(
-            child: AnimatedNumberText(
-              priceString,
-              textStyle: const TextStyle(
-                  fontSize: 50,
-                  color: Colors.black,
-                  fontWeight: FontWeight.bold),
-                duration: 50.ms,
+      body: Stack(
+        children: [
+
+          const LiveBackgroundWidget(
+            shape: ParticleShapeType.square,
+            velocityY: -5,
+            particleMinSize: 5,
+            particleMaxSize: 25,
+            particleCount: 3000,
+            palette: Palette(
+              colors: [
+                Color(0xFF50E4FF),
+                Color(0xFF2196F3),
+              ],
             ),
           ),
-        ),
+          SafeArea(
+            child: Center(
+              child: Column(
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  '현재 비트코인 가격'.text.size(30).bold.make(),
+                  AnimatedNumberText(
+                    priceString,
+                    textStyle: const TextStyle(
+                        fontSize: 50,
+                        fontWeight: FontWeight.bold),
+                      duration: 50.ms,
+                  ),
+                  LineChartWidget(priceList, maxPrice: maxPrice),
+                ],
+              ),
+            ),
+          ),
+        ],
       ),
     );
   }

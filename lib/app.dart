@@ -9,6 +9,7 @@ import 'common/theme/custom_theme_app.dart';
 class App extends StatefulWidget {
   static final GlobalKey<NavigatorState> navigatorKey = GlobalKey();
 
+  ///light, dark 테마가 준비되었고
   static const defaultTheme = CustomTheme.dark;
   static bool isForeground = true;
 
@@ -65,7 +66,7 @@ class AppState extends State<App> with Nav, WidgetsBindingObserver {
       case AppLifecycleState.detached:
         break;
       case AppLifecycleState.hidden:
-        // TODO: Handle this case.
+        break;
     }
     super.didChangeAppLifecycleState(state);
   }
